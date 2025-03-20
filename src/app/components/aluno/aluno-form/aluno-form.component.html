@@ -1,0 +1,31 @@
+<div class Aluno>
+    <div class = "container">
+        <div class = "row">
+        <div class = "col-md-12">
+            <h3 class = "text-center">Alunos</h3>
+            <table class = "table table-striped">
+            <thead>
+                <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Cpf</th>
+                <th>Telefone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor = "let aluno of alunos">
+                <td>{{ aluno.id }}</td>
+                <td>{{ aluno.nome }}</td>
+                <td>{{ aluno.cpf }}</td>
+                <td>{{ aluno.telefone }}</td>
+                <td>
+                    <button class = "btn btn-primary" (click) = "cadastroaluno(this.aluno)">Add</button>
+                    <button class = "btn btn-warning" (click) = "editaluno(this.aluno)">Edit</button>
+                    <button class = "btn btn-danger" (click) = "deletealuno(this.aluno)">Delete</button>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+        </div>
+        </div>
+</div>

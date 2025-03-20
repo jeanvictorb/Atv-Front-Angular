@@ -1,0 +1,28 @@
+<div class = "container">
+  <div class = "row">
+    <div class = "col-md-12">
+      <h3 class = "text-center">Professors</h3>
+      <table class = "table table-striped">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor = "let professor of professors">
+            <td>{{ professor.id }}</td>
+            <td>{{ professor.name }}</td>
+            <td>{{ professor.department }}</td>
+            <td>
+              <button class = "btn btn-primary" (click) = "cadastroprofessor()">Add</button>
+              <button class = "btn btn-warning" (click) = "editProfessor(professor.id)">Edit</button>
+              <button class = "btn btn-danger" (click) = "deleteProfessor(professor.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
