@@ -3,13 +3,18 @@
         <div class="col-4 azul">
             
         </div>
-        <div class ="col-4">
+        <div class ="col-4 centralizar topo">
             <div class="card">
                 <div class="card-body">
                   <h5 class="card-title">Login</h5>
                   Username<br>
+                  <input mdbInput type="text" id= "Username" for="usuario" class="form-control" [(ngModel)]="user">
+                  <br>
                   Password<br>
-                  <button type="button" class="btn btn-primary" data-mdb-ripple-init>Button</button>
+                  <input type="password" id="password" for="password" class="form-control"[(ngModel)]="password">
+                  <br>>
+                  <br>
+                  <button type="button" class="btn btn-primary" mdbRipple (click)="logar()">Confirmar</button>
                 </div>
               </div>
         </div>

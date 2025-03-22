@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
+import { Professor } from '../../../models/professor';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -9,17 +11,16 @@ import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
-  login = {
-    Username: '',
-    Password: '',
-  };
-  constructor() {}
+  user!: string;
+  password!: string;
 
+  router = inject(Router);
   logar() {
-    if (this.login.Username == 'admin' && this.login.Password == 'admin') {
-      alert('Logado com sucesso');
+    if (this.user == 'admin' && this.password == 'admin') {
+    this.router.navigate(['admin/professor']);
     } else {
       alert('Usuário ou senha inválidos');
     }
   }
+
 }

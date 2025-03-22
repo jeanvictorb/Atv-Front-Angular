@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Professor } from '../../../models/professor';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-professor-form',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, FormsModule],
   templateUrl: './professor-form.component.html',
   styleUrl: './professor-form.component.scss'
 })

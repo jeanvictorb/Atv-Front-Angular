@@ -1,25 +1,25 @@
 <div class = "container">
     <div class = "row">
       <div class = "col-md-12">
-        <h3 class = "text-center">Professores</h3>
+        <h3 class = "text-center">Turmas</h3>
         <table class = "table table-striped">
           <thead>
             <tr>
               <th>Id</th>
               <th>Name</th>
-              <th>Cpf</th>
-              <th>Email</th>
-              <th>Actions</th>
+              <th>Semestre</th>
+              <th>Ano</th>
+              <th>Turno</th>
             </tr>
           </thead>
           <tbody>
-            @for (professor of professores; track $index) {
+            @for (turma of turmas; track $index) {
             <tr>
-              <td>{{ professor.id}}</td>
-              <td>{{ professor.nome}}</td>
-              <td>{{ professor.Cpf }}</td>
-              <td>{{ professor.email }}</td>
-              <td>{{ professor.especialidade }}</td>
+              <td>{{ turma.id}}</td>
+              <td>{{ turma.nome}}</td>
+              <td>{{ turma.semestre }}</td>
+              <td>{{ turma.ano}}</td>
+              <td>{{ turma.turno }}</td>
               
               <td>
               </td>

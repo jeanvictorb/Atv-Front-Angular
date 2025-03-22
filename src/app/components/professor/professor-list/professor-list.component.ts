@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Professor } from '../../../models/professor';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-professor-list',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './professor-list.component.html',
   styleUrl: './professor-list.component.scss'
 })
@@ -19,6 +20,15 @@ export class ProfessorListComponent {
   ];
 
   constructor() { 
+    let professor = new Professor();
+    professor.id = 6;
+    professor.nome = 'Pedro';
+    professor.Cpf = '987.654.321-00';
+    professor.email = 'pedro789@gmail.com';
+    professor.especialidade = 'Geografia';
+    this.professores.push(professor);
+    
+
     console.log(this.professores);
   }
 
