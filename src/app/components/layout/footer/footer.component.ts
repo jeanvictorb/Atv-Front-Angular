@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { MdbCollapseModule } from 'mdb-angular-ui-kit/collapse';
 
 @Component({
   selector: 'app-footer',
   standalone: true,
-  imports: [],
+  imports: [MdbCollapseModule],
   templateUrl: './footer.component.html',
   styleUrl: './footer.component.scss'
 })
