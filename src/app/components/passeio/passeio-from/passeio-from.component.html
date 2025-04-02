@@ -1,0 +1,11 @@
+<div class="cards">
+
+    <ng-container *ngFor="let card of cardList" >
+        <app-card 
+        [titulo]="card.titulo"
+        [descricao]="card.descricao"
+        [imagem]="card.imagem">
+    </app-card>
+</ng-container>
+</div>
+  
