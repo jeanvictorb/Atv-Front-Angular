@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
-import { Professor } from '../../../models/professor';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
@@ -17,7 +16,7 @@ export class LoginComponent {
   router = inject(Router);
   logar() {
     if (this.user == 'admin' && this.password == 'admin') {
-    this.router.navigate(['admin/professor']);
+    this.router.navigate(['/principal']);
     } else {
       alert('Usuário ou senha inválidos');
     }
