@@ -9,8 +9,9 @@ import { PasseioFromComponent } from './components/passeio/passeio-from/passeio-
 export const routes: Routes = [
     {path: '', redirectTo: 'principal', pathMatch: 'full'},
     {path: "principal", component: PrincipalComponent, children: [
-        {path: 'pacote', component: PacoteFromComponent},
+        {path: 'pacotes', component: PacoteFromComponent},
         {path: 'passeio', component: PasseioFromComponent}
+
     ]},
 
 ];

@@ -1,1 +1,11 @@
-<p>pacote-from works!</p>
+<div class="cardspackage">
+
+    <ng-container *ngFor="let card of cardpackage" >
+        <app-card 
+        [titulo]="card.titulo"
+        [descricao]="card.descricao"
+        [imagem]="card.imagem">
+    </app-card>
+</ng-container>
+</div>
+  
