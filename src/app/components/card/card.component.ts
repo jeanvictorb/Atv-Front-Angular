@@ -11,5 +11,6 @@ export class CardComponent {
   @Input() titulo: string = '';
   @Input() descricao: string = '';
   @Input() imagem: string = '';
+  @Input() atividades: string = '';
 
 }
