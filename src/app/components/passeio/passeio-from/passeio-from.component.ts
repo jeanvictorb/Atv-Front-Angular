@@ -119,7 +119,7 @@ export class PasseioFromComponent {
       titulo: 'Parque das Aves',
       descricao:
         'Visite um santuário de conservação com mais de 1.300 aves de 150 espécies diferentes, caminhando por trilhas que passam por viveiros gigantes e interagindo com aves tropicais em seu habitat natural.',
-      imagem: '',
+      imagem: './assets/img/bird_park.jpg',
     },
     {
       titulo: 'Pôr do Sol nas Cataratas',
