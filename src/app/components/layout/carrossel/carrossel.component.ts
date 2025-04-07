@@ -1,9 +1,5 @@
-import { Component, NgModule } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// Initialization for ES Users
-import { Carousel, initMDB } from "mdb-ui-kit";
-
-initMDB({ Carousel });
 @Component({
   selector: 'app-carrossel',
   standalone: true,
