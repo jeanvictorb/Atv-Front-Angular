@@ -17,7 +17,7 @@ export class PasseioFromComponent {
       titulo: 'Cataratas do Iguaçu - Lado Brasileiro',
       descricao:
         "Explore as impressionantes quedas d'água das Cataratas do Iguaçu pelo lado brasileiro, com vistas panorâmicas e trilhas que proporcionam uma experiência inesquecível.",
-      imagem: '',
+      imagem: './../assets/img/cataratas.jpg',
     },
     {
       titulo: 'Circuito Itaipu',
