@@ -1,0 +1,75 @@
+#carouselBasicExample {
+    max-width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+#carouselBasicExample .carousel-inner {
+    width: 100%;
+    max-width: 100%;
+}
+
+#carouselBasicExample .carousel-item {
+    width: 100%;
+    height: 200px; /* Define a altura padrão do banner */
+}
+
+#carouselBasicExample .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Preenche o espaço completamente */
+    display: block;
+}
+
+#carouselBasicExample .carousel-caption {
+    padding: 1rem;
+    color: #fff;
+}
+
+#carouselBasicExample .carousel-indicators button {
+    background-color: #ffffff;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+#carouselBasicExample .carousel-control-prev-icon,
+#carouselBasicExample .carousel-control-next-icon {
+    filter: invert(1);
+}
+
+/* Responsivo para tablets */
+@media (max-width: 768px) {
+    #carouselBasicExample .carousel-item {
+        height: 250px;
+    }
+
+    #carouselBasicExample .carousel-item img {
+        height: 100%;
+    }
+
+    #carouselBasicExample .carousel-caption {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+}
+
+/* Responsivo para celulares */
+@media (max-width: 480px) {
+    #carouselBasicExample .carousel-item {
+        height: 200px;
+    }
+
+    #carouselBasicExample .carousel-item img {
+        height: 100%;
+    }
+
+    #carouselBasicExample .carousel-caption h5 {
+        font-size: 1rem;
+    }
+
+    #carouselBasicExample .carousel-caption p {
+        font-size: 0.75rem;
+    }
+}
