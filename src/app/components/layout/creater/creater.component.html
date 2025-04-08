@@ -1,20 +1,24 @@
 <div class="card text-center ">
-    <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
-      <img src="https://mdbootstrap.com/img/new/standard/nature/111.webp" class="img-fluid" />
-      <a href="#!">
-        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
-      </a>
-    </div>
-  
-    <div class="card-body">
-      <h5 class="card-title">Cadastro de Passeio</h5>
-      Nome do Passeio<br>
-      <input mdbInput type="text" id= "NameCard" for="nameCard" class="form-control" [(ngModel)]="nameCard">
-      <br>
-      Descrição do passeio<br>
-      <input mdbInput type="text" id= "DescriptionCard" for="descriptionCard" class="form-control" [(ngModel)]="descriptionCard">
-      <br>
-      <br>  
-      <button type="button" class="btn btn-primary">Button</button>
+  <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+    <img src="/assets/img/bird_park.jpg" class="img-fluid" style="height: 200px; object-fit: cover;" />
+    <a>
+      <div class="mask" style="background-color: rgba(251, 251, 251, 0.15)"></div>
+    </a>
+  </div>
+
+  <div class="card-body">
+    <h5 class="card-title">Cadastro de Passeio</h5>
+    Nome do Passeio<br>
+    <input mdbInput type="text" id="NameCard" for="nameCard" class="form-control" [(ngModel)]="nameCard">
+    <br>
+    Descrição do passeio<br>
+    <input mdbInput type="text" id="DescriptionCard" for="descriptionCard" class="form-control" [(ngModel)]="descriptionCard">
+    <br><br>
+
+    <button type="button" class="btn btn-primary" (click)="cadastrarPasseio()">Cadastrar</button>
+
+    <div *ngIf="cadastroRealizado" class="alert alert-success mt-3" role="alert">
+      Passeio cadastrado com sucesso!
     </div>
   </div>
+</div>
