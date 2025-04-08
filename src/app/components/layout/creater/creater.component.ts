@@ -8,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './creater.component.scss'
 })
 export class CreaterComponent {
+  nameCard!: string;
+  descriptionCard!: string;
 
 }
