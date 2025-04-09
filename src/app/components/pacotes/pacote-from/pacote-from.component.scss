@@ -1,56 +1,74 @@
 .card {
-    display: flex;
-    flex-direction: column; // Organiza os elementos verticalmente
-    justify-content: space-between;
-    align-items: center;
-    width: 250px; // Definindo um tamanho fixo
-    height: 320px; // Ajustando altura
-    margin: 0.5rem;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); // Sombra mais suave
-    transition: transform 0.2s ease-in-out;
-    background: #fff; // Garante um fundo branco
-    text-align: center; // Centraliza o texto dentro do card
-  
+  display: flex;
+  flex-direction: column; // Organiza os elementos verticalmente
+  justify-content: space-between;
+  align-items: center;
+  width: 250px; // Definindo um tamanho fixo
+  height: 320px; // Ajustando altura
+  margin: 0.5rem;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.15); // Sombra mais suave
+  transition: transform 0.2s ease-in-out;
+  background: #fff; // Garante um fundo branco
+  text-align: center; // Centraliza o texto dentro do card
+
+  &:hover {
+    transform: scale(1.05); // Aumenta um pouco mais ao passar o mouse
+  }
+
+  .card-img-top {
+    width: 100%; // Faz a imagem ocupar toda a largura
+    height: 140px; // Mantém a altura reduzida
+    object-fit: cover; // Ajusta a imagem sem distorcer
+  }
+
+  .card-body {
+    padding: 10px;
+    flex: 1; // Faz o conteúdo se ajustar automaticamente
+  }
+
+  .card-title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 10px;
+  }
+
+  .btn-sm {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+
     &:hover {
-      transform: scale(1.05); // Aumenta um pouco mais ao passar o mouse
-    }
-  
-    .card-img-top {
-      width: 100%; // Faz a imagem ocupar toda a largura
-      height: 140px; // Mantém a altura reduzida
-      object-fit: cover; // Ajusta a imagem sem distorcer
-    }
-  
-    .card-body {
-      padding: 10px;
-      flex: 1; // Faz o conteúdo se ajustar automaticamente
-    }
-  
-    .card-title {
-      font-size: 1rem;
-      font-weight: bold;
-      margin-bottom: 5px;
-    }
-  
-    .card-text {
-      font-size: 0.85rem;
-      color: #555;
-      margin-bottom: 10px;
-    }
-  
-    .btn-sm {
-      font-size: 0.8rem;
-      padding: 5px 10px;
-      background-color: #007bff;
-      color: white;
-      border-radius: 4px;
-      text-decoration: none;
-      transition: background 0.2s;
-  
-      &:hover {
-        background-color: #0056b3;
-      }
+      background-color: #0056b3;
     }
   }
+
+  i.bi-heart,
+  i.bi-heart-fill {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+      color: #ff4d4d; // Vermelho mais forte no hover
+      transform: scale(1.1);
+    }
+  }
+
+  .liked {
+    color: red !important;
+  }
+
+}
