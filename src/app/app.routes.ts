@@ -7,14 +7,17 @@ import { PacoteFromComponent } from './components/pacotes/pacote-from/pacote-fro
 import { PasseioFromComponent } from './components/passeio/passeio-from/passeio-from.component';
 import { CreaterComponent } from './components/layout/creater/creater.component';
 import { Login } from './models/login';
+import { IndexComponent } from './components/layout/index/index.component';
 
 export const routes: Routes = [
-    {path: '', redirectTo: 'principal', pathMatch: 'full'},
+    {path: '', redirectTo: 'login', pathMatch: 'full'},
+    {path: 'login', component: LoginComponent},
     {path: "principal", component: PrincipalComponent, children: [
+        {path: 'index', component: IndexComponent},
         {path: 'pacotes', component: PacoteFromComponent},
         {path: 'passeio', component: PasseioFromComponent},
-        {path: 'creater', component: CreaterComponent},
-        {path: 'login', component: LoginComponent}
+        {path: 'creater', component: CreaterComponent}
+    
 
     ]},
 

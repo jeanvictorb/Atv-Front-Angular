@@ -1,15 +1,12 @@
-<div class="card" *ngFor="let tour of lista; let i = index; trackBy: trackByIndex">
-  <div class="card-body">
-    <h6 class="card-title">{{ tour.name }}</h6>
-    <p class="card-text">{{ tour.description }}</p>
-
-    <i 
-      (click)="toggleLike(i)" 
-      [ngClass]="tour.liked ? 'bi-heart-fill' : 'bi-heart'" 
-      style="font-size: 2rem; color: red; cursor: pointer;">
-    </i>
-
-    <a [href]="'https://api.whatsapp.com/send?phone=45999492697&text=Olá,%20gostaria%20de%20mais%20informações.'" 
-       class="btn btn-sm btn-primary">Saiba mais</a>
-  </div>
+<div class="card">
+  @for (tour of lista; track $index) {
+    <img src="/assets/img/cataratas.jpg" class="card-img-top" >
+    <div class="card-body">
+      <h6 class="card-title">{{tour.name}}</h6>
+      <p class="card-text">{{ tour.description }}</p>
+      
+      <a [href]="'https://api.whatsapp.com/send?phone=45999492697&text=Olá,%20gostaria%20de%20mais%20informações.'" class="btn btn-sm btn-primary">Saiba mais</a>
+    </div>
+  }
 </div>
+

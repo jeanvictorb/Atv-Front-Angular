@@ -16,7 +16,7 @@ export class LoginComponent {
   router = inject(Router);
   logar() {
     if (this.user == 'admin' && this.password == 'admin') {
-    this.router.navigate(['/principal']);
+    this.router.navigate(['/principal/index']);
     } else {
       alert('Usuário ou senha inválidos');
     }
