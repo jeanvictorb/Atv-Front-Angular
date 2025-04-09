@@ -1,43 +1,43 @@
-<ngb-carousel
-  [interval]="3000"
-  [pauseOnHover]="true"
-  [wrap]="true"
-  [keyboard]="true"
-  style="width: 100vw; border-radius: 0; overflow: hidden;"
->
-  <ng-template ngbSlide>
-    <img
-      src="./assets/img/Banner.png"
-      alt="Slide 1"
-      style="width: 100%; height: 500px; object-fit: cover; display: block; border-radius: 0;"
-    />
-    <div class="carousel-caption d-none d-md-block">
-      <h5>Slide 1</h5>
-      <p>Descrição do primeiro slide</p>
-    </div>
-  </ng-template>
+<div class="meu-carrossel">
+  <ngb-carousel
+    [interval]="3000"
+    [pauseOnHover]="true"
+    [wrap]="true"
+    [keyboard]="true"
+  >
+    <ng-template ngbSlide>
+      <img
+        src="./assets/img/itaipu.jpg"
+        alt="Slide 1"
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Usina Hidrelétrica de Itaipu</h5>
+        <p> É conhecida pelos espetáculos de luzes noturnos e as vistas do miradouro central. </p>
+      </div>
+    </ng-template>
 
-  <ng-template ngbSlide>
-    <img
-      src="./assets/img/foto_marco_tres_fronteiras_nova_4.jpg"
-      alt="Slide 2"
-      style="width: 100%; height: 500px; object-fit: cover; display: block; border-radius: 0;"
-    />
-    <div class="carousel-caption d-none d-md-block">
-      <h5>Slide 2</h5>
-      <p>Descrição do segundo slide</p>
-    </div>
-  </ng-template>
+    <ng-template ngbSlide>
+      <img
+        src="./assets/img/waterfalls-of-iguacu.jpg"
+        alt="Slide 2"
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Cataratas do Iguaçu</h5>
+        <p> As Cataratas do Iguaçu são um conjunto de quedas d'água no rio Iguaçu, localizadas na 
+          fronteira entre o Brasil e a Argentina. São consideradas uma das Sete Novas Maravilhas da Natureza. </p>
+      </div>
+    </ng-template>
 
-  <ng-template ngbSlide>
-    <img
-      src="./assets/img/marco_tres.jpg"
-      alt="Slide 3"
-      style="width: 100%; height: 500px; object-fit: cover; display: block; border-radius: 0;"
-    />
-    <div class="carousel-caption d-none d-md-block">
-      <h5>Slide 3</h5>
-      <p>Descrição do terceiro slide</p>
-    </div>
-  </ng-template>
-</ngb-carousel>
+    <ng-template ngbSlide>
+      <img
+        src="./assets/img/foto_marco_tres_fronteiras_novo_4.jpg"
+        alt="Slide 3"
+      />
+      <div class="carousel-caption d-none d-md-block">
+        <h5>Marco das Três Fronteiras</h5>
+        <p> Um atrativo único no mundo. Três países, dois rios, visão espetacular das fronteiras, 
+          riquíssima cultura, geografia singular entre nações e muitas histórias! </p>
+      </div>
+    </ng-template>
+  </ngb-carousel>
+</div>
