@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   standalone: true,
   imports: [FormsModule, MdbFormsModule, CommonModule],
   templateUrl: './creater.component.html',
-  styleUrl: './creater.component.scss'
+  styleUrls: ['./creater.component.scss']
 })
 export class CreaterComponent {
   nameCard!: string;
@@ -25,20 +25,33 @@ export class CreaterComponent {
     }
 
     const novoPasseio = {
-      nome: this.nameCard,
-      descricao: this.descriptionCard,
-      dataCadastro: new Date()
+      name: this.nameCard,
+      description: this.descriptionCard
     };
 
-    console.log('Passeio cadastrado:', novoPasseio);
+    fetch('http://localhost:8080/tour', {
+      method: 'POST', 
+      headers: {
+        'Content-Type': 'application/json' 
+      },
+      body: JSON.stringify(novoPasseio) 
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('Passeio cadastrado com sucesso:', data);
+      Swal.fire('Passeio cadastrado com sucesso!', '', 'success');
+      
+      this.nameCard = '';
+      this.descriptionCard = '';
+      this.cadastroRealizado = true;
 
-    this.cadastroRealizado = true;
-
-    this.nameCard = '';
-    this.descriptionCard = '';
-
-    setTimeout(() => {
-      this.cadastroRealizado = false;
-    }, 3000);
+      setTimeout(() => {
+        this.cadastroRealizado = false;
+      }, 3000);
+    })
+    .catch(error => {
+      console.error('Erro ao cadastrar passeio:', error);
+      Swal.fire('Erro ao cadastrar passeio', '', 'error');
+    });
   }
 }

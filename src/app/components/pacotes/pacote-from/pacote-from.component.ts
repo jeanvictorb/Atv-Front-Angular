@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TourService } from '../../../service/tour.service';
-import { Tour } from '../../../models/Tour';
 import Swal from 'sweetalert2';
+import { Pacote } from '../../../models/pacote';
+import { PacoteService } from '../../../service/pacote.service';
 
 @Component({
   selector: 'app-pacote-from',
@@ -10,18 +10,26 @@ import Swal from 'sweetalert2';
   imports: [CommonModule],
   templateUrl: './pacote-from.component.html',
   styleUrl: './pacote-from.component.scss',
+  styles: [
+    `
+      :host {
+        display: flex;
+      }
+    `
+  ]
+  
 })
 export class PacoteFromComponent {
-  lista: Tour[] = [];
+  lista: Pacote[] = [];
 
-  tourService = inject(TourService);
+  pacoteService = inject(PacoteService);
 
   constructor() {
     this.findAll();
   }
 
   findAll() {
-    this.tourService.findAll()
+    this.pacoteService.findAll()
       .then((listaRetornada) => {
         this.lista = listaRetornada.map(t => ({ ...t, liked: false }));
       })

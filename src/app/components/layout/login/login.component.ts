@@ -15,11 +15,26 @@ export class LoginComponent {
 
   router = inject(Router);
   logar() {
-    if (this.user == 'admin' && this.password == 'admin') {
-    this.router.navigate(['/principal/index']);
-    } else {
-      alert('Usuário ou senha inválidos');
-    }
+    fetch(`http://localhost:8080/users/login?email=${this.user}&password=${this.password}`, {
+      method: 'POST'
+    })
+    .then(async response => {
+      if (response.ok) {
+        const user = await response.json();
+        console.log('Usuário logado:', user);
+        // Aqui você pode salvar o usuário no localStorage ou serviço de autenticação
+        this.router.navigate(['/principal/index']);
+      } else if (response.status === 401) {
+        alert('Usuário ou senha inválidos');
+      } else {
+        const errorText = await response.text();
+        alert('Erro ao fazer login: ' + errorText);
+      }
+    })
+    .catch(error => {
+      console.error('Erro na requisição:', error);
+      alert('Erro ao conectar ao servidor');
+    });
   }
 
 }

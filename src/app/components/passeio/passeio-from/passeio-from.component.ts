@@ -10,6 +10,14 @@ import Swal from 'sweetalert2';
   imports: [CommonModule],
   templateUrl: './passeio-from.component.html',
   styleUrl: './passeio-from.component.scss',
+
+  styles: [
+    `
+      :host {
+        display: flex;
+      }
+    `
+  ]
 })
 export class PasseioFromComponent {
   lista: Tour[] = [];
