@@ -1,5 +1,20 @@
-.footer{
+.footer {
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-}
+    color: white;
+    background-color: #2f4538;
+  
+    a {
+      color: white;
+      text-decoration: none;
+  
+      &:hover {
+        color: #ccc;
+      }
+    }
+  
+    p, h6, span, i {
+      color: white;
+    }
+  }  
