@@ -1,0 +1,10 @@
+@for (tour of lista; track $index) {
+    <div class="card">
+          <img src="/assets/img/cataratas.jpg" class="card-img-top" >
+          <div class="card-body">
+            <h6 class="card-title">{{tour.name}}</h6>
+            <p class="card-text">{{ tour.description }}</p>
+            <a [href]="'https://api.whatsapp.com/send?phone=45999492697&text=Olá,%20gostaria%20de%20mais%20informações.'" class="btn btn-sm btn-primary">Saiba mais</a>
+          </div>
+        </div>
+      }

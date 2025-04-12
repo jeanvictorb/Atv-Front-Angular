@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { Pacote } from '../models/pacote';
+import { Package } from '../models/pacote';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PacoteService {
+export class PackageService {
 
   private API = 'http://localhost:8080/package';  
 
   constructor() { }
 
-  findAll(): Promise<Pacote[]> {
+  findAll(): Promise<Package[]> {
     return fetch(this.API)
       .then((response) => {
         if (!response.ok) {
@@ -18,7 +18,7 @@ export class PacoteService {
         }
         return response.json();
       })
-      .then((data) => data as Pacote[])  
+      .then((data) => data as Package[])  
       .catch((error) => {
         throw new Error(error);
       });
