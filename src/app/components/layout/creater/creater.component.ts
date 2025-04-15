@@ -1,8 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import Swal from 'sweetalert2';
+import { TourService } from '../../../service/tour.service';
+import { Tour } from '../../../models/Tour';
 
 @Component({
   selector: 'app-creater',
@@ -12,46 +15,71 @@ import Swal from 'sweetalert2';
   styleUrls: ['./creater.component.scss']
 })
 export class CreaterComponent {
+
+  tour: Tour = {
+    name: "",
+    description: ""
+  };
   nameCard!: string;
   descriptionCard!: string;
-  cadastroRealizado: boolean = false;
+  rotaAtivida = inject(ActivatedRoute);
+  tourService = inject(TourService);
+  router = inject(Router);
 
-  constructor() {}
-
-  cadastrarPasseio(): void {
-    if (!this.nameCard || !this.descriptionCard) {
-      Swal.fire('Preencha todos os campos', '', 'warning');
-      return;
+  constructor() {
+    let id = this.rotaAtivida.snapshot.params['id'];
+    if(id){
+      this.findById(id);
     }
+  }
 
-    const novoPasseio = {
-      name: this.nameCard,
-      description: this.descriptionCard
-    };
-
-    fetch('http://localhost:8080/tour', {
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json' 
-      },
-      body: JSON.stringify(novoPasseio) 
+  findById(id: number){
+    this.tourService.findById(id)
+    .then((tour: Tour) => {
+      this.tour = tour;
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Passeio cadastrado com sucesso:', data);
-      Swal.fire('Passeio cadastrado com sucesso!', '', 'success');
+    .catch((erro) => {
+      Swal.fire(erro?.message, '', 'error');
       
-      this.nameCard = '';
-      this.descriptionCard = '';
-      this.cadastroRealizado = true;
-
-      setTimeout(() => {
-        this.cadastroRealizado = false;
-      }, 3000);
-    })
-    .catch(error => {
-      console.error('Erro ao cadastrar passeio:', error);
-      Swal.fire('Erro ao cadastrar passeio', '', 'error');
     });
+  }
+
+  createTour() {
+    this.tourService.create(this.tour)
+      .then(() => {
+        this.tour = {
+          name: "",
+          description: ""
+        };
+        Swal.fire('Tour criado com sucesso!', '', 'success');
+      })
+      .catch((erro) => {
+        Swal.fire(erro?.message, '', 'error');
+      });
+  }
+
+  updateTour() {
+    if (this.tour.id !== null) {
+      this.tourService.update(this.tour)
+        .then(() => {
+          Swal.fire('Tour atualizado com sucesso!', '', 'success');
+        })
+        .catch((erro) => {
+          Swal.fire(erro?.message, '', 'error');
+        });
+    }
+  }
+
+  deleteTour() {
+    if (this.tour.id !== null) {
+      this.tourService.delete(Number(this.tour.id))
+        .then(() => {
+          Swal.fire('Tour deletado com sucesso!', '', 'success');
+          this.router.navigate(['/principal/creater']);
+        })
+        .catch((erro) => {
+          Swal.fire(erro?.message, '', 'error');
+        });
+    }
   }
 }

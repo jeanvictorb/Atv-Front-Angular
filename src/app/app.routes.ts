@@ -16,8 +16,8 @@ export const routes: Routes = [
         {path: 'index', component: IndexComponent},
         {path: 'pacotes', component: PacoteFromComponent},
         {path: 'passeio', component: PasseioFromComponent},
-        {path: 'creater', component: CreaterComponent}
-    
+        {path: 'creater', component: CreaterComponent},
+        {path: 'creater/:id', component: CreaterComponent},
 
     ]},
 

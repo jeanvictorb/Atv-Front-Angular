@@ -9,16 +9,18 @@
   <div class="card-body">
     <h5 class="card-title">Cadastro de Passeio</h5>
     Nome do Passeio<br>
-    <input mdbInput type="text" id="NameCard" for="nameCard" class="form-control" [(ngModel)]="nameCard">
+    <input mdbInput type="text" id="NameCard" for="nameCard" class="form-control" [(ngModel)]="tour.name">
     <br>
     Descrição do passeio<br>
-    <input mdbInput type="text" id="DescriptionCard" for="descriptionCard" class="form-control" [(ngModel)]="descriptionCard">
+    <input mdbInput type="text" id="DescriptionCard" for="descriptionCard" class="form-control" [(ngModel)]="tour.description">
     <br><br>
 
-    <button type="button" class="btn btn-primary" (click)="cadastrarPasseio()">Cadastrar</button>
+    @if(tour.id && tour.id > 0){
+    <button type="button" class="btn btn-primary" (click)="updateTour()" [disabled]="!tour.name || !tour.description">Editar</button>
+    <button type="button" class="btn btn-primary" (click)="deleteTour()" [disabled]="!tour.name || !tour.description">Excluir</button>
+    }@else {
+      <button type="button" class="btn btn-primary" (click)="createTour()" [disabled]="!tour.name || !tour.description">Cadastrar</button>
+    }
 
-    <div *ngIf="cadastroRealizado" class="alert alert-success mt-3" role="alert">
-      Passeio cadastrado com sucesso!
-    </div>
   </div>
 </div>
