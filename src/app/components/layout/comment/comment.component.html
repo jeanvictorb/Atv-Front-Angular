@@ -1,0 +1,22 @@
+
+<h2>Deixe um comentário</h2>
+
+<input [(ngModel)]="nameComment" placeholder="Seu nome" />
+<br />
+<textarea [(ngModel)]="text" placeholder="Escreva seu comentário..."></textarea>
+<br />
+<button (click)="addComment()">Enviar</button>
+
+<div class="rating-stars">
+    <span class="star" [class.filled]="(hoverRating || rating) >= 1"
+          (mouseenter)="setHover(1)" (mouseleave)="clearHover()" (click)="setRating(1)">★</span>
+    <span class="star" [class.filled]="(hoverRating || rating) >= 2"
+          (mouseenter)="setHover(2)" (mouseleave)="clearHover()" (click)="setRating(2)">★</span>
+    <span class="star" [class.filled]="(hoverRating || rating) >= 3"
+          (mouseenter)="setHover(3)" (mouseleave)="clearHover()" (click)="setRating(3)">★</span>
+    <span class="star" [class.filled]="(hoverRating || rating) >= 4"
+          (mouseenter)="setHover(4)" (mouseleave)="clearHover()" (click)="setRating(4)">★</span>
+    <span class="star" [class.filled]="(hoverRating || rating) >= 5"
+          (mouseenter)="setHover(5)" (mouseleave)="clearHover()" (click)="setRating(5)">★</span>
+  </div>
+  

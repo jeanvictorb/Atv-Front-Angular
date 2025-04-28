@@ -22,7 +22,6 @@ export class LoginComponent {
       if (response.ok) {
         const user = await response.json();
         console.log('Usuário logado:', user);
-        // Aqui você pode salvar o usuário no localStorage ou serviço de autenticação
         this.router.navigate(['/principal/index']);
       } else if (response.status === 401) {
         alert('Usuário ou senha inválidos');

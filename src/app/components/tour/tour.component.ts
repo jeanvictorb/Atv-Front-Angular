@@ -1,16 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TourService } from '../../../service/tour.service';
-import { Tour } from '../../../models/Tour';
 import Swal from 'sweetalert2';
+import { CommonModule } from '@angular/common';
+import { Tour } from '../../models/Tour';
+import { TourService } from '../../service/tour.service';
 
 @Component({
-  selector: 'app-passeio-from',
+  selector: 'app-tour',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './passeio-from.component.html',
-  styleUrl: './passeio-from.component.scss',
-
+  templateUrl: './tour.component.html',
+  styleUrl: './tour.component.scss',
   styles: [
     `
       :host {
@@ -19,8 +18,8 @@ import Swal from 'sweetalert2';
     `
   ]
 })
-export class PasseioFromComponent {
-  lista: Tour[] = [];
+export class TourComponent {
+lista: Tour[] = [];
 
   tourService = inject(TourService);
 
@@ -38,3 +37,6 @@ export class PasseioFromComponent {
       });
   }
 }
+
+
+

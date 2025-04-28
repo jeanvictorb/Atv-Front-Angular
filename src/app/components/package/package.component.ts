@@ -1,15 +1,15 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { PackageService } from '../../service/package.service';
 import Swal from 'sweetalert2';
-import { Pacote } from '../../../models/pacote';
-import { PacoteService } from '../../../service/pacote.service';
+import { Package } from '../../models/pacote';
+import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-pacote-from',
+  selector: 'app-package',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './pacote-from.component.html',
-  styleUrl: './pacote-from.component.scss',
+  templateUrl: './package.component.html',
+  styleUrl: './package.component.scss',
   styles: [
     `
       :host {
@@ -17,12 +17,11 @@ import { PacoteService } from '../../../service/pacote.service';
       }
     `
   ]
-  
 })
-export class PacoteFromComponent {
-  lista: Pacote[] = [];
+export class PackageComponent {
+lista: Package[] = [];
 
-  pacoteService = inject(PacoteService);
+  pacoteService = inject(PackageService);
 
   constructor() {
     this.findAll();
@@ -46,4 +45,3 @@ export class PacoteFromComponent {
     return index;
   }
 }
-
