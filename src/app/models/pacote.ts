@@ -1,7 +1,8 @@
 export class Package {
+    id?: number;
     title!: string;
     description!: string;
-    activides!: string[];
+    activities!: string[];
 
     liked?: boolean;
 }

@@ -87,6 +87,4 @@ export class TourService {
       throw new Error(error.message);
     });
   }
-
-  
 }
