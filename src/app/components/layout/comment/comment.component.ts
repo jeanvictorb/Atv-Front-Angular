@@ -27,15 +27,30 @@ export class CommentComponent {
     const newComment = {
       name: this.nameComment,
       text: this.text,
-      date: new Date()
     };
   
-   
-    console.log('Comentário adicionado:', newComment);
-  
-    // Limpa os campos
-    this.nameComment = '';
-    this.text = '';
+    fetch('http://localhost:8080/comments', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: newComment.name,
+        text: newComment.text
+      }),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Erro ao adicionar comentário');
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log('Comentário salvo no backend:', data);
+      Swal.fire('Comentário adicionado com sucesso!', '', 'success');
+      this.nameComment = '';
+      this.text = '';
+    })
   }
   setRating(star: number): void {
     this.rating = star;

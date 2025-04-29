@@ -1,10 +1,9 @@
 <!-- Formulário para Criar/Editar Usuário -->
 <div class="user-form">
   <h3>{{ user.id ? 'Editar Usuário' : 'Criar Novo Usuário' }}</h3>
-  <form (submit)="user.id ? createUser() : updateUser(user)">
+  <form (submit)="createUser()">
     <div>
       <label for="name">Nome:</label>
-      <!-- Usando property binding e event binding -->
       <input type="text" [value]="user.name" (input)="onInputChange($event)" required />
       </div>
     <div>
