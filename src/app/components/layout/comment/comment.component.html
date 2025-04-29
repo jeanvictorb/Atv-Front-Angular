@@ -20,3 +20,21 @@
           (mouseenter)="setHover(5)" (mouseleave)="clearHover()" (click)="setRating(5)">★</span>
   </div>
   
+  <table class="table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nome</th>
+          <th>Comentario</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (comment of comments; track $index) {
+          <tr>
+            <td>{{ comment.id }}</td>
+            <td>{{ comment.name }}</td>
+            <td>{{ comment.text }}</td>
+          </tr>
+        }
+      </tbody>
+    </table>

@@ -7,7 +7,7 @@ import { error } from "console";
 
 export class CommentService {
 
-    private API = 'http://localhost:8080/comment'
+    private API = 'http://localhost:8080/comments'
 
     constructor() {}
     

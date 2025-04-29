@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { CommentService } from '../../../service/comment.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-comment',
@@ -15,9 +17,25 @@ export class CommentComponent {
   text!: string;
 
   rating: number = 0;         
-  hoverRating: number = 0;    
+  hoverRating: number = 0;
+  comments: any= [];
+  commentService=inject(CommentService);
+  router=inject(Router);
 
-  constructor() {}
+  constructor() {
+    this.findAll();
+  }
+
+
+  async findAll() {
+    try {
+      this.comments = await this.commentService.findAll();
+    } catch (erro) {
+      Swal.fire('Erro ao buscar comentários', '', 'error');
+    }
+  }
+
+
   addComment(): void {
     if (!this.nameComment || !this.text) {
       Swal.fire('Preencha todos os campos', '', 'warning');
@@ -48,6 +66,7 @@ export class CommentComponent {
     .then(data => {
       console.log('Comentário salvo no backend:', data);
       Swal.fire('Comentário adicionado com sucesso!', '', 'success');
+      this.findAll();
       this.nameComment = '';
       this.text = '';
     })
