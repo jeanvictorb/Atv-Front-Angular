@@ -1,90 +1,38 @@
+// tour.service.ts
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 import { Tour } from '../models/Tour';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TourService {
 
-  private API = 'http://localhost:8080/tour';  
+  private readonly API = 'http://localhost:8080/tour';
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
-  findAll(): Promise<Tour[]> {
-    return fetch(this.API)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erro na requisição');
-        }
-        return response.json();
-      })
-      .then((data) => data as Tour[])  
-      .catch((error) => {
-        throw new Error(error);
-      });
+  /** Busca todos os tours */
+  async findAll(): Promise<Tour[]> {
+    return firstValueFrom(this.http.get<Tour[]>(this.API));
   }
 
-  findById(id: number): Promise<Tour> {
-    return fetch(this.API+'/'+id)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Erro na requisição');
-        }
-        return response.json();
-      })
-      .then((data) => data as Tour)  
-      .catch((error) => {
-        throw new Error(error);
-      });
+  /** Busca um tour por id */
+  async findById(id: number): Promise<Tour> {
+    return firstValueFrom(this.http.get<Tour>(`${this.API}/${id}`));
   }
 
-  create(tour: Tour): Promise<Tour> {
-    return fetch(this.API, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(tour)
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Erro ao criar tour');
-      }
-      return response.json();
-    })
-    .then((data) => data as Tour)
-    .catch((error) => {
-      throw new Error(error.message);
-    });
+  /** Cria um novo tour */
+  async create(tour: Tour): Promise<Tour> {
+    return firstValueFrom(this.http.post<Tour>(this.API, tour));
   }
 
-  update(tour: Tour): Promise<Tour> {
-    return fetch(`${this.API}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(tour)
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Erro ao atualizar tour');
-      }
-      return response.json();
-    })
-    .then((data) => data as Tour)
-    .catch((error) => {
-      throw new Error(error.message);
-    });
+  /** Atualiza um tour */
+  async update(tour: Tour): Promise<Tour> {
+    return firstValueFrom(this.http.put<Tour>(this.API, tour));
   }
 
-  delete(id: number): Promise<void> {
-    return fetch(`${this.API}/${id}`, {
-      method: 'DELETE'
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Erro ao deletar tour');
-      }
-    })
-    .catch((error) => {
-      throw new Error(error.message);
-    });
+  /** Deleta um tour */
+  async delete(id: number): Promise<void> {
+    return firstValueFrom(this.http.delete<void>(`${this.API}/${id}`));
   }
 }

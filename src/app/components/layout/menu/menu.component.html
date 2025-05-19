@@ -1,16 +1,8 @@
-<!-- Navbar -->
 <div class="menu">
-  <nav
-    class="navbar navbar-expand-lg navbar-dark"
-    style="background-color: #2f4538"
-  >
-    >
-    <!-- Container wrapper -->
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2f4538">
     <div class="container-fluid">
-      <!-- Navbar brand -->
       <a class="navbar-brand" href="/">E&J Tour</a>
 
-      <!-- Toggle button -->
       <button
         class="navbar-toggler"
         type="button"
@@ -21,71 +13,33 @@
         <i class="fas fa-bars"></i>
       </button>
 
-      <!-- Collapsible wrapper -->
       <div
         class="collapse navbar-collapse"
         id="navbarSupportedContent"
         mdbCollapse
         #basicNavbar="mdbCollapse"
       >
-        <!-- Left links -->
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="principal/package"
-              >Pacotes</a
-            >
+            <a class="nav-link active" aria-current="page" (click)="goToPacotes()" style="cursor: pointer;">Pacotes</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" href="principal/tour">Passeios</a>
+            <a class="nav-link active" (click)="goToPasseios()" style="cursor: pointer;">Passeios</a>
+          </li>
+          <li class="nav-item" [hidden]="!showAdm">
+            <a class="nav-link active" aria-current="page" (click)="goToCriarUsuario()" style="cursor: pointer;">Criar usuario</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="principal/user"
-              >Criar usuario</a
-            >
+            <a class="nav-link active" aria-current="page" (click)="goToCriarPacote()" style="cursor: pointer;">Criar pacote</a>
           </li>
           <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="principal/packagecreater"
-              >Criar pacote</a
-            >
+            <a class="nav-link active" aria-current="page" (click)="goToCriarPasseio()" style="cursor: pointer;">Criar passeio</a>
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link active"
-              aria-current="page"
-              href="principal/creater"
-              >Criar passeio</a
-            >
+          <li class="nav-item" [hidden]="!showUser">
+            <a class="nav-link active" aria-current="page" href="/login">Login</a>
           </li>
-        </ul>  
-
-        
-        <!-- Left links -->
-
-        <!-- Search form -->
-        <!-- <form class="d-flex input-group w-auto">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Buscar"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline" type="button" style="color: white;">
-            Pesquisar
-          </button> -->
-        <!-- </form> -->
+        </ul>
       </div>
-      <!-- Collapsible wrapper -->
     </div>
-    <!-- Container wrapper -->
   </nav>
-  <!-- Navbar -->
 </div>

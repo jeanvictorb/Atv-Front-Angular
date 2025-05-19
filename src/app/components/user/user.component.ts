@@ -18,7 +18,10 @@ export class UserComponent {
 
   user: User = {
     name: '',
-    email: ''
+    email: '',
+    birthday: '',
+    password: '',
+    role: { id: 2 }
   };
   users: User[] = [];
 
@@ -29,10 +32,12 @@ export class UserComponent {
     this.findAll();
   }
 
-
   onInputChange(event: Event): void {
     const input = event.target as HTMLInputElement;
-    console.log(input.value);
+    const fieldName = input.getAttribute('name');
+    if(fieldName) {
+      (this.user as any)[fieldName] = input.value;
+    }
   }
 
   async findAll() {
@@ -43,14 +48,26 @@ export class UserComponent {
     }
   }
 
+private formatDateToDDMMYYYY(dateString?: string): string {
+  if (!dateString) return '';
+  const date = new Date(dateString);
+  const day = String(date.getDate()).padStart(2, '0');
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+}
+
   async createUser() {
     try {
-      await this.userService.create(this.user);
-      this.user = { name: '', email: '' };
+      const userToSend = { ...this.user };
+      userToSend.birthday = this.formatDateToDDMMYYYY(this.user.birthday);
+
+      await this.userService.create(userToSend);
+      this.user = { name: '', email: '', birthday: '', password: '' };
       await this.findAll();
       Swal.fire('Usuário criado com sucesso!', '', 'success');
     } catch (erro) {
-      Swal.fire( 'Erro ao criar usuário', '', 'error');
+      Swal.fire('Erro ao criar usuário', '', 'error');
     }
   }
 
@@ -60,7 +77,7 @@ export class UserComponent {
       await this.findAll();
       Swal.fire('Usuário atualizado com sucesso!', '', 'success');
     } catch (erro) {
-      Swal.fire( 'Erro ao atualizar usuário', '', 'error');
+      Swal.fire('Erro ao atualizar usuário', '', 'error');
     }
   }
 }

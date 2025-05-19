@@ -3,4 +3,7 @@ export class User {
     name!: string;
     email!: string;
     password?: string;
+    birthday?: string;
+    roleId?: string;
+    role?: { id: number };
 }

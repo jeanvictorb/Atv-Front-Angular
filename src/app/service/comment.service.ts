@@ -1,29 +1,17 @@
-import { Injectable } from "@angular/core";
-import { error } from "console";
+// comment.service.ts
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
-
+@Injectable({ providedIn: 'root' })
 export class CommentService {
 
-    private API = 'http://localhost:8080/comments'
+  private readonly API = 'http://localhost:8080/comments';
 
-    constructor() {}
-    
-    findAll(): Promise<Comment[]>{
-        return fetch(this.API)
-        .then((response) =>{
-            if(!response.ok) {
-                throw new Error('Erro na requisição');
-            }
-            return response.json();
-        })
-        .then((data) => data as Comment[])
-        .catch((error) => {
-            throw  new Error(error);
-        })
-    }
+  constructor(private http: HttpClient) {}
 
-    
+  /** Busca todos os comentários */
+  async findAll(): Promise<Comment[]> {
+    return firstValueFrom(this.http.get<Comment[]>(this.API));
+  }
 }
