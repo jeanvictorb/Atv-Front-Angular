@@ -1,67 +1,34 @@
+// user.service.ts
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { firstValueFrom } from 'rxjs';      // <-- 1. importe isso
 import { User } from '../models/user';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class UserService {
 
-  private apiUrl = 'http://localhost:8080/users';
+  private readonly apiUrl = 'http://localhost:8080/users';
 
-  // Método para buscar todos os usuários
+  constructor(private http: HttpClient) { }
+
+  /** Busca todos os usuários */
   async findAll(): Promise<User[]> {
-    const response = await fetch(this.apiUrl);
-    
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar usuários: ${response.statusText}`);
-    }
-    
-    return response.json();  // Retorna a lista de usuários
+    return firstValueFrom(this.http.get<User[]>(this.apiUrl));
   }
 
-  // Método para criar um novo usuário
+  /** Cria um novo usuário */
   async create(user: User): Promise<User> {
-    const response = await fetch(this.apiUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erro ao criar usuário: ${response.statusText}`);
-    }
-
-    return response.json();  // Retorna o usuário criado
+    return firstValueFrom(this.http.post<User>(this.apiUrl, user));
   }
 
+  /** Login simples (exemplo) */
   async login(email: string, senha: string): Promise<User | null> {
-    const response = await fetch(this.apiUrl);
-    if (!response.ok) {
-      throw new Error(`Erro ao buscar usuários para login: ${response.statusText}`);
-    }
-
-    const users: User[] = await response.json();
-    const user = users.find(u => u.email === email && u.password === senha);
-    
-    return user || null;
+    const users = await this.findAll();                      // reaproveita o método acima
+    return users.find(u => u.email === email && u.password === senha) ?? null;
   }
 
-  // Método para atualizar um usuário
+  /** Atualiza um usuário */
   async update(user: User): Promise<User> {
-    const response = await fetch(`${this.apiUrl}/${user.id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(user),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Erro ao atualizar usuário: ${response.statusText}`);
-    }
-
-    return response.json();  // Retorna o usuário atualizado
+    return firstValueFrom(this.http.put<User>(`${this.apiUrl}/${user.id}`, user));
   }
 }

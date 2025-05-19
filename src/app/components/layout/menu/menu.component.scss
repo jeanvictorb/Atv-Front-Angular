@@ -1,3 +1,9 @@
 .body{
     overflow: hidden;
 }
+
+.space{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row ;
+}

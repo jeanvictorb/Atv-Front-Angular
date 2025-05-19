@@ -8,10 +8,10 @@
                 <div class="card-body">
                   <h5 class="card-title">Login</h5>
                   Email<br>
-                  <input mdbInput type="text" id= "Username" for="usuario" class="form-control" [(ngModel)]="user">
+                  <input mdbInput type="text" id= "Username" [(ngModel)]="login.username" for="usuario" class="form-control" >
                   <br>
                   Password<br>
-                  <input type="password" id="password" for="password" class="form-control"[(ngModel)]="password">
+                  <input type="password" id="password" for="password" class="form-control" [(ngModel)]="login.password">
                   <br>
                   <br>
                   <button type="button" class="btn btn-primary" mdbRipple (click)="logar()">Confirmar</button>

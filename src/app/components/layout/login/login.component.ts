@@ -2,6 +2,9 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Router } from '@angular/router';
+import { Login } from '../../../auth/login';
+import { LoginService } from '../../../auth/login.service';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,26 +16,43 @@ export class LoginComponent {
   user!: string;
   password!: string;
 
+  login: Login = new Login();
+
   router = inject(Router);
+  loginService = inject(LoginService);
+
+  constructor(){
+    this.loginService.removerToken();
+  }
+
   logar() {
-    fetch(`http://localhost:8080/users/login?email=${this.user}&password=${this.password}`, {
-      method: 'POST'
-    })
-    .then(async response => {
-      if (response.ok) {
-        const user = await response.json();
-        console.log('Usuário logado:', user);
-        this.router.navigate(['/principal/index']);
-      } else if (response.status === 401) {
-        alert('Usuário ou senha inválidos');
-      } else {
-        const errorText = await response.text();
-        alert('Erro ao fazer login: ' + errorText);
+
+    this.loginService.logar(this.login).subscribe({
+      next: token => {
+        if(token)
+          this.loginService.addToken(token);
+        this.gerarToast().fire({ icon: "success", title: "Seja bem-vindo!" });
+        this.router.navigate(['principal/tour']);
+      },
+      error: erro => {
+        Swal.fire('Usuário ou senha incorretos!', '', 'error');
       }
     })
-    .catch(error => {
-      console.error('Erro na requisição:', error);
-      alert('Erro ao conectar ao servidor');
+
+
+  }
+
+  gerarToast() {
+    return Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
     });
   }
 

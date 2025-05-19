@@ -1,15 +1,46 @@
-<!-- Formulário para Criar/Editar Usuário -->
 <div class="user-form">
   <h3>{{ user.id ? 'Editar Usuário' : 'Criar Novo Usuário' }}</h3>
-  <form (submit)="createUser()">
+  <form (submit)="createUser(); $event.preventDefault()">
     <div>
       <label for="name">Nome:</label>
-      <input type="text" [value]="user.name" (input)="onInputChange($event)" required />
-      </div>
+      <input
+        id="name"
+        type="text"
+        [(ngModel)]="user.name"
+        name="name"
+        required
+      />
+    </div>
     <div>
       <label for="email">Email:</label>
-      <input type="email" [value]="user.email" (input)="onInputChange($event)" required />
-      </div>
+      <input
+        id="email"
+        type="email"
+        [(ngModel)]="user.email"
+        name="email"
+        required
+      />
+    </div>
+    <div>
+      <label for="password">Senha:</label>
+      <input
+        id="password"
+        type="password"
+        [(ngModel)]="user.password"
+        name="password"
+        required
+      />
+    </div>
+    <div>
+      <label for="birthday">Data de Nascimento:</label>
+      <input
+        id="birthday"
+        type="date"
+        [(ngModel)]="user.birthday"
+        name="birthday"
+        required
+      />
+    </div>
     <button type="submit" class="btn btn-primary">{{ user.id ? 'Salvar' : 'Criar' }}</button>
   </form>
 </div>
@@ -25,15 +56,13 @@
     </tr>
   </thead>
   <tbody>
-    @for (user of users; track $index) {
-      <tr>
-        <td>{{ user.id }}</td>
-        <td>{{ user.name }}</td>
-        <td>{{ user.email }}</td>
-        <td>
-          <button (click)="updateUser(user)" class="btn btn-sm btn-info">Editar</button>
-        </td>
-      </tr>
-    }
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.email }}</td>
+      <td>
+        <button (click)="updateUser(user)" class="btn btn-sm btn-info">Editar</button>
+      </td>
+    </tr>
   </tbody>
 </table>
