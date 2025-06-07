@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Tour } from '../models/Tour';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class TourService {
 
-  private readonly API = 'http://localhost:8080/tour';
+  private readonly API = environment.SERVIDOR+'/tour';
 
   constructor(private http: HttpClient) { }
 

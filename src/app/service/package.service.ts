@@ -3,11 +3,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { firstValueFrom } from 'rxjs';
 import { Package } from '../models/pacote';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class PackageService {
 
-  private readonly API = 'http://localhost:8080/package';
+  private readonly API = environment.SERVIDOR+'/package';
 
   constructor(private http: HttpClient) { }
 
