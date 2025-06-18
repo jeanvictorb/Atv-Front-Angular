@@ -1,16 +1,15 @@
-// package.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Package } from '../models/pacote';
 import { environment } from '../../environments/environment';
+import { Pagina } from '../models/pagina';
 
 @Injectable({ providedIn: 'root' })
 export class PackageService {
+  private readonly API = environment.SERVIDOR + '/package';
 
-  private readonly API = environment.SERVIDOR+'/package';
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   /** Busca todos os packages */
   async findAll(): Promise<Package[]> {
@@ -35,5 +34,12 @@ export class PackageService {
   /** Deleta um package */
   async delete(id: number): Promise<void> {
     return firstValueFrom(this.http.delete<void>(`${this.API}/${id}`));
+  }
+
+  /** Busca os packages de forma paginada */
+  findAllPaginado(numPaginaAtual: number): Observable<Pagina<Package>> {
+    return this.http.get<Pagina<Package>>(
+      `${this.API}/findAll/${numPaginaAtual}`
+    );
   }
 }

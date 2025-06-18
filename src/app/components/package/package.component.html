@@ -1,13 +1,26 @@
+<!-- Lista de pacotes -->
 @for (package of lista; track $index) {
-    <div class="card">
-        <img src="/assets/img/cataratas.jpg" class="card-img-top" >
-        <div class="card-body">
-          <h6 class="card-title">{{package.title}}</h6>
-          <p class="card-text">{{ package.description }}</p>
-          
-          <a [href]="'https://api.whatsapp.com/send?phone=45999492697&text=Olá,%20gostaria%20de%20mais%20informações.'" class="btn btn-sm btn-primary">Saiba mais</a>
-        </div>
-      </div>
-    }
-    
-    
+<div class="card">
+  <img src="/assets/img/cataratas.jpg" class="card-img-top" />
+  <div class="card-body">
+    <h6 class="card-title">{{ package.title }}</h6>
+    <p class="card-text">{{ package.description }}</p>
+    <a
+      [href]="
+        'https://api.whatsapp.com/send?phone=45999492697&text=Olá,%20gostaria%20de%20mais%20informações.'
+      "
+      class="btn btn-sm btn-primary"
+      >Saiba mais</a
+    >
+  </div>
+</div>
+}
+
+<ngb-pagination
+  (pageChange)="trocarPagina($event)"
+  [pageSize]="pagina.size"
+  [collectionSize]="pagina.totalElements"
+  [(page)]="numPaginaAtual"
+  [boundaryLinks]="true"
+>
+</ngb-pagination>
