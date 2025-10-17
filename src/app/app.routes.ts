@@ -9,12 +9,11 @@ import { PackageComponent } from './components/package/package.component';
 import { TourComponent } from './components/tour/tour.component';
 import { PackageCreaterComponent } from './components/layout/packageCreater/creater.component';
 import { UserComponent } from './components/user/user.component';
-import { guardGuard } from './auth/guard.guard';
 
 export const routes: Routes = [
     {path: '', redirectTo: 'login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
-    {path: "principal", component: PrincipalComponent, canActivate:[guardGuard], children: [
+    {path: "principal", component: PrincipalComponent, children: [
         {path: 'index', component: IndexComponent},
         {path: 'creater', component: CreaterComponent},
         {path: 'creater/:id', component: CreaterComponent},

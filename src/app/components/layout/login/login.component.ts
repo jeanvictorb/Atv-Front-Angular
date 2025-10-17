@@ -3,8 +3,10 @@ import { FormsModule } from '@angular/forms';
 import { MdbFormsModule } from 'mdb-angular-ui-kit/forms';
 import { Router } from '@angular/router';
 import { Login } from '../../../auth/login';
-import { LoginService } from '../../../auth/login.service';
+// Importamos o LoginService e também a interface TokenResponse para tipagem
+import { LoginService, TokenResponse } from '../../../auth/login.service'; 
 import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -13,6 +15,7 @@ import Swal from 'sweetalert2';
   styleUrl: './login.component.scss',
 })
 export class LoginComponent {
+  // Nota: Não é estritamente necessário declarar user e password aqui se o `login` for a fonte de dados
   user!: string;
   password!: string;
 
@@ -22,24 +25,27 @@ export class LoginComponent {
   loginService = inject(LoginService);
 
   constructor(){
+    // Garante que o usuário sempre comece sem token ao carregar a página de login
     this.loginService.removerToken();
   }
 
   logar() {
-
     this.loginService.logar(this.login).subscribe({
-      next: token => {
-        if(token)
-          this.loginService.addToken(token);
+      // 🚀 MUDANÇA PRINCIPAL: 'response' agora é do tipo TokenResponse (o objeto JSON)
+      next: (response: TokenResponse) => {
+        // Verifica se a resposta existe e possui o token de acesso
+        if(response && response.access_token)
+          // Passamos o objeto completo 'response' para o service
+          this.loginService.addToken(response); 
+          
         this.gerarToast().fire({ icon: "success", title: "Seja bem-vindo!" });
-        this.router.navigate(['principal/tour']);
+        this.router.navigate(['principal/']);
       },
       error: erro => {
+        // Este bloco continua tratando o erro 401 do backend (Usuário ou senha incorretos)
         Swal.fire('Usuário ou senha incorretos!', '', 'error');
       }
-    })
-
-
+    });
   }
 
   gerarToast() {
@@ -55,5 +61,4 @@ export class LoginComponent {
       }
     });
   }
-
 }
