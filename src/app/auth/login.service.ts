@@ -1,78 +1,227 @@
-import { HttpClient } from '@angular/common/http';
+// src/app/auth/login.service.ts
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { jwtDecode, JwtPayload } from 'jwt-decode';
 import { Login } from './login';
 import { User } from '../models/user';
 
-// 1. Interface para o formato de resposta do token (Keycloak/OAuth2)
+/**
+ * Interface para o formato de resposta do token do Keycloak
+ */
 export interface TokenResponse {
-  access_token: string; // O token JWT propriamente dito
+  access_token: string;
   expires_in: number;
   refresh_token: string;
+  refresh_expires_in: number;
   token_type: string;
-  // Outros campos como 'scope', 'session_state', etc., podem ser adicionados
+  scope?: string;
+  session_state?: string;
+  'not-before-policy'?: number;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  http = inject(HttpClient);
-  // O endpoint de login no Spring Boot é http://localhost:8081/token
-  API = 'http://localhost:8081/token';
+  private http = inject(HttpClient);
+  private readonly API = 'http://localhost:8081/token';
+  private readonly TOKEN_KEY = 'access_token';
+  private readonly REFRESH_TOKEN_KEY = 'refresh_token';
 
   constructor() {}
 
-  getToken() {
+  /**
+   * Obtém o token de acesso do localStorage
+   */
+  getToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('token');
+      return localStorage.getItem(this.TOKEN_KEY);
     }
     return null;
   }
 
-  // 2. addToken agora recebe a resposta completa e armazena APENAS o access_token
-  addToken(response: TokenResponse) {
+  /**
+   * Obtém o refresh token do localStorage
+   */
+  getRefreshToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('token', response.access_token);
-      // Opcional: Armazenar o refresh_token para renovação de sessão
-      // localStorage.setItem('refresh_token', response.refresh_token);
+      return localStorage.getItem(this.REFRESH_TOKEN_KEY);
+    }
+    return null;
+  }
+
+  /**
+   * Salva os tokens no localStorage
+   */
+  addToken(response: TokenResponse): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      localStorage.setItem(this.TOKEN_KEY, response.access_token);
+      if (response.refresh_token) {
+        localStorage.setItem(this.REFRESH_TOKEN_KEY, response.refresh_token);
+      }
     }
   }
 
-  removerToken() {
+  /**
+   * Remove os tokens do localStorage
+   */
+  removerToken(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('token');
-      // Opcional: Remover o refresh_token também
-      // localStorage.removeItem('refresh_token');
+      localStorage.removeItem(this.TOKEN_KEY);
+      localStorage.removeItem(this.REFRESH_TOKEN_KEY);
     }
   }
 
-  // 3. logar() agora espera um Observable<TokenResponse> (JSON)
+  /**
+   * Faz login e retorna o token
+   */
   logar(login: Login): Observable<TokenResponse> {
-    // A remoção de `responseType: 'text' as 'json'` faz o HttpClient esperar JSON por padrão,
-    // garantindo que ele lide com a resposta padrão do OAuth2.
-    return this.http.post<TokenResponse>(this.API, login);
+    return this.http.post<TokenResponse>(this.API, login).pipe(
+      tap(response => {
+        // Salva o token automaticamente após login bem-sucedido
+        this.addToken(response);
+        console.log('✅ Login realizado com sucesso!');
+        console.log('👤 Usuário:', this.getUsuarioLogado()?.preferred_username);
+        console.log('🎭 Roles:', this.getRoles());
+      }),
+      catchError(this.handleError)
+    );
   }
 
-  jwtDecode() {
-    let token = this.getToken();
+  /**
+   * Decodifica o JWT e retorna o payload
+   */
+  jwtDecode(): User | null {
+    const token = this.getToken();
     if (token) {
-      return jwtDecode<JwtPayload>(token);
+      try {
+        return jwtDecode<User>(token);
+      } catch (error) {
+        console.error('❌ Erro ao decodificar token:', error);
+        return null;
+      }
     }
-    return '';
+    return null;
   }
 
-  hasRole(role: string) {
-    let user = this.jwtDecode() as User;
-    // Ajuste: Dependendo de como você configura o mapeamento do JWT para `User`,
-    // o campo de permissões/roles pode se chamar `roles`, `scope`, ou outro.
-    // Preservando `roleId` conforme seu código original:
-    if (user.roleId == role) return true;
-    else return false;
+  /**
+   * Verifica se o usuário tem uma role específica
+   */
+  hasRole(role: string): boolean {
+    const user = this.jwtDecode();
+    if (!user || !user.realm_access?.roles) {
+      return false;
+    }
+    
+    // Verifica se a role existe no array (case-insensitive)
+    const roles = user.realm_access.roles.map(r => r.toUpperCase());
+    return roles.includes(role.toUpperCase());
   }
-  
-  getUsuarioLogado() {
-    return this.jwtDecode() as User;
+
+  /**
+   * Verifica se o usuário tem pelo menos uma das roles fornecidas
+   */
+  hasAnyRole(roles: string[]): boolean {
+    return roles.some(role => this.hasRole(role));
+  }
+
+  /**
+   * Verifica se o usuário tem todas as roles fornecidas
+   */
+  hasAllRoles(roles: string[]): boolean {
+    return roles.every(role => this.hasRole(role));
+  }
+
+  /**
+   * Retorna todas as roles do usuário
+   */
+  getRoles(): string[] {
+    const user = this.jwtDecode();
+    return user?.realm_access?.roles || [];
+  }
+
+  /**
+   * Verifica se o usuário está autenticado (token válido e não expirado)
+   */
+  isAuthenticated(): boolean {
+    const user = this.jwtDecode();
+    if (!user || !user.exp) {
+      return false;
+    }
+    
+    // Verifica se o token não está expirado
+    const now = Math.floor(Date.now() / 1000);
+    return user.exp > now;
+  }
+
+  /**
+   * Retorna o usuário logado
+   */
+  getUsuarioLogado(): User | null {
+    return this.jwtDecode();
+  }
+
+  /**
+   * Retorna o nome de usuário preferido
+   */
+  getUsername(): string | null {
+    const user = this.jwtDecode();
+    return user?.preferred_username || null;
+  }
+
+  /**
+   * Retorna o email do usuário
+   */
+  getEmail(): string | null {
+    const user = this.jwtDecode();
+    return user?.email || null;
+  }
+
+  /**
+   * Retorna o nome completo do usuário
+   */
+  getFullName(): string | null {
+    const user = this.jwtDecode();
+    if (user?.name) {
+      return user.name;
+    }
+    if (user?.given_name && user?.family_name) {
+      return `${user.given_name} ${user.family_name}`;
+    }
+    return user?.given_name || user?.family_name || null;
+  }
+
+  /**
+   * Faz logout removendo os tokens
+   */
+  logout(): void {
+    this.removerToken();
+    console.log('👋 Logout realizado com sucesso!');
+  }
+
+  /**
+   * Tratamento de erros
+   */
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Ocorreu um erro desconhecido!';
+    
+    if (error.error instanceof ErrorEvent) {
+      // Erro do lado do cliente
+      errorMessage = `Erro: ${error.error.message}`;
+    } else {
+      // Erro do lado do servidor
+      if (error.status === 401) {
+        errorMessage = 'Credenciais inválidas. Verifique seu usuário e senha.';
+      } else if (error.status === 500) {
+        errorMessage = 'Erro no servidor. Tente novamente mais tarde.';
+      } else {
+        errorMessage = `Erro ${error.status}: ${error.message}`;
+      }
+    }
+    
+    console.error('❌ Erro no login:', errorMessage);
+    return throwError(() => new Error(errorMessage));
   }
 }

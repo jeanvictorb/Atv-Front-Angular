@@ -23,7 +23,7 @@ export class UserService {
     return firstValueFrom(this.http.post<User>(this.apiUrl, user));
   }
 
-  /** Login simples (exemplo) */
+/** Login simples (exemplo) */
   async login(email: string, senha: string): Promise<User | null> {
     const users = await this.findAll();                      // reaproveita o método acima
     return users.find(u => u.email === email && u.password === senha) ?? null;

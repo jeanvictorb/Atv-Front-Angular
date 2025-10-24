@@ -31,11 +31,8 @@ export class LoginComponent {
 
   logar() {
     this.loginService.logar(this.login).subscribe({
-      // 🚀 MUDANÇA PRINCIPAL: 'response' agora é do tipo TokenResponse (o objeto JSON)
       next: (response: TokenResponse) => {
-        // Verifica se a resposta existe e possui o token de acesso
         if(response && response.access_token)
-          // Passamos o objeto completo 'response' para o service
           this.loginService.addToken(response); 
           
         this.gerarToast().fire({ icon: "success", title: "Seja bem-vindo!" });
